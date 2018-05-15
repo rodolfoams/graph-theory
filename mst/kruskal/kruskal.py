@@ -27,23 +27,6 @@ def kruskal(G):
         forest.merge_trees(t1, t2)
         t1.add_edge(e)
     return forest[0]
-    # print forest
-    # MST = Graph(G.V)
-    # V = G.V
-    # E = G.E
-    # visited = [V[0]]
-    # to_visit = list(V)
-    # to_visit.remove(V[0])
-    # safe_edges = get_safe_edges(visited, E)
-    # while len(to_visit) > 0:
-    #     safe_edges.sort()
-    #     chosen_edge = safe_edges[0]
-    #     v = chosen_edge.origin if chosen_edge.origin not in visited else chosen_edge.destination
-    #     MST.add_edge(chosen_edge)
-    #     visited.append(v)
-    #     to_visit.remove(v)
-    #     safe_edges = get_safe_edges(visited, E)
-    # return MST
 
 def main(args):
     V = [Vertex("A"), Vertex("B"), Vertex("C"), Vertex("D"), Vertex("E")]
