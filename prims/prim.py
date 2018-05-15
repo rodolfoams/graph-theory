@@ -15,30 +15,32 @@ def get_safe_edges(visited, E):
     return safe_edges
 
 def prim(G):
+    MST = Graph(G.V)
     V = G.V
     E = G.E
     visited = [V[0]]
     to_visit = list(V)
     to_visit.remove(V[0])
-    chosen_edges = list()
     safe_edges = get_safe_edges(visited, E)
     while len(to_visit) > 0:
         safe_edges.sort()
         chosen_edge = safe_edges[0]
         v = chosen_edge.origin if chosen_edge.origin not in visited else chosen_edge.destination
-        chosen_edges.append(chosen_edge)
+        MST.add_edge(chosen_edge)
         visited.append(v)
         to_visit.remove(v)
         safe_edges = get_safe_edges(visited, E)
-    return chosen_edges
+    return MST
 
 def main(args):
     V = [Vertex("A"), Vertex("B"), Vertex("C"), Vertex("D"), Vertex("E")]
     E = [Edge(9,V[0],V[1]), Edge(5,V[0],V[2]), Edge(10,V[0],V[4]), Edge(1,V[1],V[3]), Edge(11,V[2],V[3])]
     G = Graph(V, E)
     MST = prim(G)
-    for e in MST:
-        print e
+    print "================= Original Graph ======================"
+    print G
+    print "================= MST ======================"
+    print MST
 
 if __name__ == "__main__":
     main(sys.argv[1:])
