@@ -11,13 +11,37 @@ class Graph():
             raise TypeError("E must be an iterable that contains only elements of type Edge! Value was: " + str(E))
         self.E = list(E)
 
-    def __str__(self):
+    def __str__(self, indent=""):
         str_builder = ["Graph:", "    Vertices:"]
         str_builder.append("        " + ",".join(map(str, self.V)))
         str_builder.append("    Edges:")
         for e in self.E:
             str_builder.append("        " + str(e))  
-        return "\n".join(str_builder)      
+        return "\n".join(map(lambda x: indent + x, str_builder))
+
+    def __eq__(self, other):
+        if not isinstance(other, Graph):
+            return False
+        for v in self.V:
+            if v not in other.V:
+                return False
+        for v2 in other.V:
+            if v2 not in self.V:
+                return False
+        for e in self.E:
+            if e not in other.E:
+                return False
+        for e2 in self.E:
+            if e2 not in self.E:
+                return False
+        return True
+
+    def __contains__(self, obj):
+        if isinstance(obj, Vertex):
+            return obj in self.V
+        if isinstance(obj, Edge):
+            return obj in self.E
+        return False
     
     def add_vertex(self, new_vertex):
         if not isinstance(new_vertex, Vertex):

@@ -1,9 +1,8 @@
 import sys, os
-sys.path.append(os.path.join(os.path.dirname(__file__), "..", "Common"))
+sys.path.append(os.path.join(os.path.dirname(__file__), "..", "..", "Common"))
 from vertex import Vertex
 from edge import Edge
 from graph import Graph
-# from graph import Graph
 
 def get_safe_edges(visited, E):
     safe_edges = list()
