@@ -1,23 +1,9 @@
-from sys import argv
-
-class Vertex():
-    def __init__(self, name):
-        self.name = name
-
-    def __eq__(self, other):
-        return self.name == other.name
-
-class Edge():
-    def __init__(self, weight, origin, destination):
-        self.weight = weight
-        self.origin = origin
-        self.destination = destination
-
-    def __gt__(self, other):
-        return self.weight > other.weight
-    
-    def __str__(self):
-        return self.origin.name + "<->" + self.destination.name
+import sys, os
+sys.path.append(os.path.join(os.path.dirname(__file__), "..", "Common"))
+from vertex import Vertex
+from edge import Edge
+from graph import Graph
+# from graph import Graph
 
 def get_safe_edges(visited, E):
     safe_edges = list()
@@ -28,7 +14,9 @@ def get_safe_edges(visited, E):
             safe_edges.append(e)
     return safe_edges
 
-def prim(V, E):
+def prim(G):
+    V = G.V
+    E = G.E
     visited = [V[0]]
     to_visit = list(V)
     to_visit.remove(V[0])
@@ -47,9 +35,10 @@ def prim(V, E):
 def main(args):
     V = [Vertex("A"), Vertex("B"), Vertex("C"), Vertex("D"), Vertex("E")]
     E = [Edge(9,V[0],V[1]), Edge(5,V[0],V[2]), Edge(10,V[0],V[4]), Edge(1,V[1],V[3]), Edge(11,V[2],V[3])]
-    MST = prim(V, E)
+    G = Graph(V, E)
+    MST = prim(G)
     for e in MST:
         print e
 
 if __name__ == "__main__":
-    main(argv[1:])
+    main(sys.argv[1:])
