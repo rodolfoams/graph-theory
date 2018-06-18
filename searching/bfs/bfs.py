@@ -6,24 +6,30 @@ from graph import Graph
 
 visited = None
 
-def init_dfs(G):
+def init_bfs(G):
     global visited
     visited = list()
     for v in G.V:
         v.set_color(VertexColor.WHITE)
 
-def dfs(G, current, target):
+def bfs(G, root, target):
     global visited
+
     if visited is None: visited = list()
-    current.set_color(VertexColor.BLACK)
-    visited.append(current)
-    if current == target:
-        return True
-    for e in G.E:
-        if e.origin == current and e.destination.has_color(VertexColor.WHITE):
-            if dfs(G, e.destination, target): return True
-        elif e.destination == current and e.origin.has_color(VertexColor.WHITE):
-            if dfs(G, e.origin, target): return True
+    priority_queue = list()
+    priority_queue.append(root)
+    while len(priority_queue) > 0:
+        current = priority_queue[0]
+        visited.append(current)
+        current.set_color(VertexColor.BLACK)
+        priority_queue.pop(0)
+        if current == target:
+            return True
+        for e in G.E:
+            if e.origin == current and e.destination.has_color(VertexColor.WHITE) and e.destination not in priority_queue:
+                priority_queue.append(e.destination)
+            elif e.destination == current and e.origin.has_color(VertexColor.WHITE) and e.origin not in priority_queue:
+                priority_queue.append(e.origin)
     return False
 
 def main(args):
@@ -40,9 +46,9 @@ def main(args):
           /   \           /   \           /   \           /   \
         7       8       9       10      11      12      13      14
     '''
-    init_dfs(G)
-    assert(dfs(G, V[0], V[12]) == True)
-    assert(len(visited) == 12)
+    init_bfs(G)
+    assert(bfs(G, V[0], V[12]) == True)
+    assert(len(visited) == 13)
     print(map(str,visited))
 
 if __name__ == "__main__":
