@@ -18,11 +18,8 @@ class Vertex():
     def __str__(self):
         return self.name
 
-    def is_white(self):
-        return self.__color == VertexColor.WHITE
+    def has_color(self, color):
+        return self.__color == color
 
-    def is_grey(self):
-        return self.__color == VertexColor.GREY
-
-    def is_black(self):
-        return self.__color == VertexColor.BLACK
+    def set_color(self, color):
+        self.__color = color
